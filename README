@@ -1,0 +1,10 @@
+dpaster is a quick & dirty client interface to to the http://dpaste.com/ pastebin.
+
+It was written by Peter Fein (pfein@pobox.com) on a Sunday afternoon while he was blocked on an upstream bug. It is available under the WTFPL http://sam.zoy.org/wtfpl/
+
+It requires twill. Drop somewhere on your PYTHONPATH.
+
+`dpaster` is a commandline client using argparse. Try --help
+
+`kdpaster.py` makes klipper DCOP calls using pykde.
+

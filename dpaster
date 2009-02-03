@@ -1,0 +1,40 @@
+#!/usr/bin/python
+
+import argparse
+import sys
+import dpaster
+
+def copyCmd(args):
+    print>>sys.stdout, dpaster.copy(args.pasteid, args.format)
+    
+def pasteCmd(args):
+    if args.list_formats:
+        print>>sys.stdout, " ".join(dpaster.format2ext.iterkeys())
+        return
+    print>>sys.stdout, dpaster.paste(args.infile, args.format)
+
+if __name__=='__main__':
+   
+    parser=argparse.ArgumentParser(description="commandline client for dpaste")
+    parser.add_argument("--debug", action='store_true', help="show noise from twill")
+
+    sub_parsers=parser.add_subparsers()    
+    copy_parser=sub_parsers.add_parser("copy", description="copy dpaste content")
+    copy_parser.add_argument("pasteid", type=int)
+    copy_parser.add_argument("outfile", type=argparse.FileType('w'), nargs='?', default="-")
+    copy_parser.add_argument("-F", dest="format", choices=("plain", "html"), default="plain")
+    copy_parser.set_defaults(command=copyCmd)
+    
+    paste_parser=sub_parsers.add_parser("paste", description="paste content to dpaste")
+    paste_parser.add_argument("infile", type=argparse.FileType('r'), nargs='?', default="-")
+    paste_parser.add_argument('-F', dest="format", choices=dpaster.format2ext.keys(), default=None)
+    paste_parser.add_argument("--list-formats", action='store_true', help="list formats")    
+    paste_parser.set_defaults(command=pasteCmd)
+    
+    args=parser.parse_args()
+    
+    dpaster.enable_debug(args.debug)
+
+    args.command(args)
+    
+    
