@@ -4,5 +4,5 @@ setup( name ="dpaster",
 	version  ="0.1",
 	packages = find_packages(),
 	install_requires = ["twill","argparse"],
-	scripts = ["dpaster/dpaster"]
+	scripts = ["dpaster/dpaster_run.py"]
 )
