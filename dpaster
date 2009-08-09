@@ -2,7 +2,7 @@
 
 import argparse
 import sys
-import dpaster
+from dpasterlib import dpaster
 
 def copyCmd(args):
     print>>sys.stdout, dpaster.copy(args.pasteid, args.format)
