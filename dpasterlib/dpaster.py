@@ -22,7 +22,7 @@ format2ext={"Python":".py",
 
 ext2format=dict((v, k) for k, v in format2ext.iteritems() if v is not None)
 
-def paste(infile, format='Plain'):
+def paste(infile, format='Plain', browser=None):
     fname=getattr(infile, 'name', None) # StringIOs don't have a name
     if format is None and fname is not None:
         ext=os.path.splitext(fname)[1]
@@ -32,7 +32,13 @@ def paste(infile, format='Plain'):
     formvalue('pasteform', 'language', format)
     formvalue('pasteform', 'content', infile.read())
     submit()
-    return get_browser().get_url()
+    if browser:
+        import webbrowser
+        url = get_browser().get_url()
+        webbrowser.open(url)
+        return url
+    else:
+        return get_browser().get_url()
 
 def copy(pasteid, format='plain'):
     url='http://dpaste.com/%d/%s/'%(pasteid, format)

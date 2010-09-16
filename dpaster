@@ -11,7 +11,7 @@ def pasteCmd(args):
     if args.list_formats:
         print>>sys.stdout, " ".join(dpaster.format2ext.iterkeys())
         return
-    print>>sys.stdout, dpaster.paste(args.infile, args.format)
+    print>>sys.stdout, dpaster.paste(args.infile, args.format, args.b)
 
 if __name__=='__main__':
    
@@ -28,6 +28,7 @@ if __name__=='__main__':
     paste_parser=sub_parsers.add_parser("paste", description="paste content to dpaste")
     paste_parser.add_argument("infile", type=argparse.FileType('r'), nargs='?', default="-")
     paste_parser.add_argument('-F', dest="format", choices=dpaster.format2ext.keys(), default=None)
+    paste_parser.add_argument('-b', action="store_true", help="Open in default browser",default= None)
     paste_parser.add_argument("--list-formats", action='store_true', help="list formats")    
     paste_parser.set_defaults(command=pasteCmd)
     
